@@ -1,4 +1,5 @@
 #[macro_use] extern crate rustc_serialize;
+extern crate bodyparser;
 extern crate uuid;
 extern crate iron;
 extern crate router;

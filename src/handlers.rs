@@ -1,3 +1,4 @@
+extern crate bodyparser;
 
 use std::sync::Arc;
 
@@ -44,10 +45,17 @@ impl POSTTodosHandler {
 }
 
 impl Handler for POSTTodosHandler {
-    fn handle(&self, _: &mut Request) -> IronResult<Response> {
-        let id = Uuid::new_v4().to_hyphenated_string();
-        let todo = Todo::new(id.clone(), String::from("The title"));
-        self.repository.add(id, todo);
-        Ok(Response::with(status::Created))
+    fn handle(&self, req: &mut Request) -> IronResult<Response> {
+        let json_body = req.get::<bodyparser::Json>();
+        return match json_body {
+            Ok(Some(json_body)) => {
+                let id = Uuid::new_v4().to_hyphenated_string();
+                let todo = Todo::new(id.clone(), json_body["title"].to_string());
+                let todo = self.repository.add(id, todo);
+                Ok(Response::with((status::Created, json::encode(&todo).unwrap())))
+            }
+            Ok(None) => panic!("No body"),
+            Err(err) => panic!("Error: {:?}", err)
+        }
     }
 }

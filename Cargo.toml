@@ -8,3 +8,6 @@ iron = "*"
 router = "*"
 uuid = "*"
 rustc-serialize = "*"
+
+[dependencies.bodyparser]
+git = "https://github.com/iron/body-parser.git"

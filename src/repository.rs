@@ -63,9 +63,10 @@ impl<T> Repository<T> where T: Clone {
         }
     }
 
-    pub fn add(&self, key: String, value: T) {
+    pub fn add(&self, key: String, value: T) -> T where T: Clone {
         let mut m_entities = self.entities.lock().unwrap();
-        m_entities.insert(key, value);
+        m_entities.insert(key, value.clone());
+        value
     }
 
     pub fn get(&self, key: String) -> T {
@@ -77,7 +78,7 @@ impl<T> Repository<T> where T: Clone {
     pub fn all(&self) -> Vec<T> {
         let m_entities = self.entities.lock().unwrap();
         let mut values = Vec::new();
-        for (k, v) in m_entities.iter() {
+        for (_, v) in m_entities.iter() {
             values.push((*v).clone());
         }
         values
