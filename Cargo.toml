@@ -1,0 +1,8 @@
+[package]
+name = "todo_backend"
+version = "0.1.0"
+authors = ["Duda Dornelles <dudassdornelles@gmail.com>"]
+
+[dependencies]
+iron = "*"
+router = "*"
