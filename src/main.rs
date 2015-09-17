@@ -1,4 +1,4 @@
-
+extern crate uuid;
 extern crate iron;
 extern crate router;
 

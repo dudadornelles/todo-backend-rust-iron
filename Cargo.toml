@@ -6,3 +6,4 @@ authors = ["Duda Dornelles <dudassdornelles@gmail.com>"]
 [dependencies]
 iron = "*"
 router = "*"
+uuid = "*"
