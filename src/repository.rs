@@ -49,6 +49,19 @@ fn should_return_all() {
     assert_eq!(all[1], 20);
 }
 
+#[test]
+fn should_delete_all() {
+    let repo: Arc<Repository<u32>> = Arc::new(Repository::new());
+
+    repo.add(0.to_string(), 10);
+    repo.add(1.to_string(), 20);
+
+    repo.delete_all();
+    let all: Vec<u32> = repo.all();
+
+    assert_eq!(all.len(), 0);
+}
+
 use std::collections::HashMap;
 use std::sync::Mutex;
 
@@ -82,5 +95,10 @@ impl<T> Repository<T> where T: Clone {
             values.push((*v).clone());
         }
         values
+    }
+
+    pub fn delete_all(&self) {
+        let mut m_entities = self.entities.lock().unwrap();
+        m_entities.clear();
     }
 }

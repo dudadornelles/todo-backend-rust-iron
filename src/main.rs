@@ -23,6 +23,7 @@ fn main() {
 
     router.get("/todos", GETTodosHandler::new(repository.clone()));
     router.post("/todos", POSTTodosHandler::new(repository.clone()));
+    router.delete("/todos", DELETETodosHandler::new(repository.clone()));
 
     Iron::new(router).http("localhost:3000").unwrap();
 }
