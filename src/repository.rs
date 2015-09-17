@@ -101,4 +101,8 @@ impl<T> Repository<T> where T: Clone {
         let mut m_entities = self.entities.lock().unwrap();
         m_entities.clear();
     }
+
+    pub fn update(&self, id: String, new: T) -> T {
+        self.add(id, new)
+    }
 }
