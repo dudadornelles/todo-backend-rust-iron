@@ -7,3 +7,4 @@ authors = ["Duda Dornelles <dudassdornelles@gmail.com>"]
 iron = "*"
 router = "*"
 uuid = "*"
+rustc-serialize = "*"

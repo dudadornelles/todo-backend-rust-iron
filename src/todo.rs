@@ -1,5 +1,5 @@
 
-#[derive(Debug, Clone)]
+#[derive(Debug, Clone, RustcDecodable, RustcEncodable)]
 pub struct Todo {
     pub id: String,
     pub title: String

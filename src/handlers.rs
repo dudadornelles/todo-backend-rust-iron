@@ -1,6 +1,7 @@
 
 use std::sync::Arc;
 
+use rustc_serialize::json;
 use iron::prelude::*;
 use iron::status;
 use iron::middleware::Handler;
@@ -23,7 +24,9 @@ impl GETTodosHandler {
 
 impl Handler for GETTodosHandler {
     fn handle(&self, _: &mut Request) -> IronResult<Response> {
-         Ok(Response::with(status::Ok))
+        let all = self.repository.all();
+        let all_json = json::encode(&all).unwrap();
+        Ok(Response::with((status::Ok, all_json)))
     }
 }
 

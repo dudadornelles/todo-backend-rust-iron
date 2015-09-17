@@ -36,6 +36,19 @@ fn should_work_with_a_complex_struct() {
     assert_eq!(actual.title, String::from("O gosh..."));
 }
 
+#[test]
+fn should_return_all() {
+    let repo: Arc<Repository<u32>> = Arc::new(Repository::new());
+
+    repo.add(0.to_string(), 10);
+    repo.add(1.to_string(), 20);
+
+    let all: Vec<u32> = repo.all();
+
+    assert_eq!(all[0], 10);
+    assert_eq!(all[1], 20);
+}
+
 use std::collections::HashMap;
 use std::sync::Mutex;
 
@@ -59,5 +72,14 @@ impl<T> Repository<T> where T: Clone {
         let m_entities = self.entities.lock().unwrap();
         let value = m_entities.get(&key).unwrap();
         (*value).clone()
+    }
+
+    pub fn all(&self) -> Vec<T> {
+        let m_entities = self.entities.lock().unwrap();
+        let mut values = Vec::new();
+        for (k, v) in m_entities.iter() {
+            values.push((*v).clone());
+        }
+        values
     }
 }
