@@ -50,7 +50,8 @@ impl Handler for POSTTodosHandler {
         return match json_body {
             Ok(Some(json_body)) => {
                 let id = Uuid::new_v4().to_hyphenated_string();
-                let todo = Todo::new(id.clone(), json_body["title"].to_string());
+                let obj = json_body.as_object().unwrap();
+                let todo = Todo::new(id.clone(), String::from(obj.get("title").unwrap().as_string().unwrap()));
                 let todo = self.repository.add(id, todo);
                 Ok(Response::with((status::Created, json::encode(&todo).unwrap())))
             }
