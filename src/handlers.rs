@@ -12,18 +12,22 @@ use uuid::Uuid;
 use repository::Repository;
 use todo::Todo;
 
+macro_rules! handler {
+    ($x:ident) => {
+        pub struct $x {
+            repository: Arc<Repository<Todo>>,
+        }
 
-// == GET /todos
-pub struct GETTodosHandler {
-    repository: Arc<Repository<Todo>>,
-}
-
-impl GETTodosHandler {
-    pub fn new(repository: Arc<Repository<Todo>>) -> GETTodosHandler {
-        GETTodosHandler { repository: repository }
+        impl $x {
+            pub fn new(repository: Arc<Repository<Todo>>) -> $x {
+                $x { repository: repository }
+            }
+        }
     }
 }
 
+// == GET /todos
+handler!(GETTodosHandler);
 impl Handler for GETTodosHandler {
     fn handle(&self, _: &mut Request) -> IronResult<Response> {
         let all = self.repository.all();
@@ -33,16 +37,7 @@ impl Handler for GETTodosHandler {
 }
 
 // == POST /todos
-pub struct POSTTodosHandler {
-    repository: Arc<Repository<Todo>>,
-}
-
-impl POSTTodosHandler {
-    pub fn new(repository: Arc<Repository<Todo>>) -> POSTTodosHandler {
-        POSTTodosHandler { repository: repository }
-    }
-}
-
+handler!(POSTTodosHandler);
 impl Handler for POSTTodosHandler {
     fn handle(&self, req: &mut Request) -> IronResult<Response> {
         let json_body = req.get::<bodyparser::Json>();
@@ -78,16 +73,7 @@ impl Handler for POSTTodosHandler {
 }
 
 // == DELETE /todos
-pub struct DELETETodosHandler {
-    repository: Arc<Repository<Todo>>,
-}
-
-impl DELETETodosHandler {
-    pub fn new(repository: Arc<Repository<Todo>>) -> DELETETodosHandler {
-        DELETETodosHandler { repository: repository }
-    }
-}
-
+handler!(DELETETodosHandler);
 impl Handler for DELETETodosHandler {
     fn handle(&self, _: &mut Request) -> IronResult<Response> {
         self.repository.delete_all();
@@ -96,16 +82,7 @@ impl Handler for DELETETodosHandler {
 }
 
 // == GET /todos/:id
-pub struct GETTodoHandler {
-    repository: Arc<Repository<Todo>>,
-}
-
-impl GETTodoHandler {
-    pub fn new(repository: Arc<Repository<Todo>>) -> GETTodoHandler {
-        GETTodoHandler { repository: repository }
-    }
-}
-
+handler!(GETTodoHandler);
 impl Handler for GETTodoHandler {
     fn handle(&self, req: &mut Request) -> IronResult<Response> {
         let id = req.extensions.get::<Router>().unwrap().find("id").unwrap();
@@ -115,16 +92,7 @@ impl Handler for GETTodoHandler {
 }
 
 // == PATCH /todos/:id
-pub struct PATCHTodoHandler {
-    repository: Arc<Repository<Todo>>,
-}
-
-impl PATCHTodoHandler {
-    pub fn new(repository: Arc<Repository<Todo>>) -> PATCHTodoHandler {
-        PATCHTodoHandler { repository: repository }
-    }
-}
-
+handler!(PATCHTodoHandler);
 impl Handler for PATCHTodoHandler {
     fn handle(&self, req: &mut Request) -> IronResult<Response> {
         let json_body = req.get::<bodyparser::Json>();
@@ -170,16 +138,7 @@ impl Handler for PATCHTodoHandler {
 }
 
 // == DELETE /todos/:id
-pub struct DELETETodoHandler {
-    repository: Arc<Repository<Todo>>,
-}
-
-impl DELETETodoHandler {
-    pub fn new(repository: Arc<Repository<Todo>>) -> DELETETodoHandler {
-        DELETETodoHandler { repository: repository }
-    }
-}
-
+handler!(DELETETodoHandler);
 impl Handler for DELETETodoHandler {
     fn handle(&self, req: &mut Request) -> IronResult<Response> {
         let id = String::from(req.extensions.get::<Router>().unwrap().find("id").unwrap());
