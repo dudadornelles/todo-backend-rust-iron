@@ -9,6 +9,8 @@ mod todo;
 mod handlers;
 
 use std::sync::Arc;
+use std::env;
+use std::str::FromStr;
 
 use iron::prelude::*;
 use router::Router;
@@ -29,5 +31,10 @@ fn main() {
     router.patch("/todos/:id", PATCHTodoHandler::new(repository.clone()));
     router.delete("/todos/:id", DELETETodoHandler::new(repository.clone()));
 
-    Iron::new(router).http("localhost:3000").unwrap();
+    fn get_server_port() -> u16 {
+        let port_str = env::var("PORT").unwrap_or(String::new());
+        FromStr::from_str(&port_str).unwrap_or(8080)
+    }
+
+    Iron::new(router).http(("0.0.0.0", get_server_port())).unwrap();
 }
