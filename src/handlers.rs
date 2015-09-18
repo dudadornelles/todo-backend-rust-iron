@@ -12,20 +12,18 @@ use iron::headers::AccessControlAllowOrigin;
 use router::Router;
 use uuid::Uuid;
 
-use ::repository::Repository;
-use ::todo::Todo;
+use repository::Repository;
+use todo::Todo;
 
 
 // == GET /todos
 pub struct GETTodosHandler {
-    repository: Arc<Repository<Todo>>
+    repository: Arc<Repository<Todo>>,
 }
 
 impl GETTodosHandler {
     pub fn new(repository: Arc<Repository<Todo>>) -> GETTodosHandler {
-        GETTodosHandler {
-            repository: repository,
-        }
+        GETTodosHandler { repository: repository }
     }
 }
 
@@ -39,14 +37,12 @@ impl Handler for GETTodosHandler {
 
 // == POST /todos
 pub struct POSTTodosHandler {
-    repository: Arc<Repository<Todo>>
+    repository: Arc<Repository<Todo>>,
 }
 
 impl POSTTodosHandler {
     pub fn new(repository: Arc<Repository<Todo>>) -> POSTTodosHandler {
-        POSTTodosHandler {
-            repository: repository,
-        }
+        POSTTodosHandler { repository: repository }
     }
 }
 
@@ -86,14 +82,12 @@ impl Handler for POSTTodosHandler {
 
 // == DELETE /todos
 pub struct DELETETodosHandler {
-    repository: Arc<Repository<Todo>>
+    repository: Arc<Repository<Todo>>,
 }
 
 impl DELETETodosHandler {
     pub fn new(repository: Arc<Repository<Todo>>) -> DELETETodosHandler {
-        DELETETodosHandler {
-            repository: repository,
-        }
+        DELETETodosHandler { repository: repository }
     }
 }
 
@@ -106,14 +100,12 @@ impl Handler for DELETETodosHandler {
 
 // == GET /todos/:id
 pub struct GETTodoHandler {
-    repository: Arc<Repository<Todo>>
+    repository: Arc<Repository<Todo>>,
 }
 
 impl GETTodoHandler {
     pub fn new(repository: Arc<Repository<Todo>>) -> GETTodoHandler {
-        GETTodoHandler {
-            repository: repository,
-        }
+        GETTodoHandler { repository: repository }
     }
 }
 
@@ -127,14 +119,12 @@ impl Handler for GETTodoHandler {
 
 // == PATCH /todos/:id
 pub struct PATCHTodoHandler {
-    repository: Arc<Repository<Todo>>
+    repository: Arc<Repository<Todo>>,
 }
 
 impl PATCHTodoHandler {
     pub fn new(repository: Arc<Repository<Todo>>) -> PATCHTodoHandler {
-        PATCHTodoHandler {
-            repository: repository,
-        }
+        PATCHTodoHandler { repository: repository }
     }
 }
 
@@ -184,14 +174,12 @@ impl Handler for PATCHTodoHandler {
 
 // == DELETE /todos/:id
 pub struct DELETETodoHandler {
-    repository: Arc<Repository<Todo>>
+    repository: Arc<Repository<Todo>>,
 }
 
 impl DELETETodoHandler {
     pub fn new(repository: Arc<Repository<Todo>>) -> DELETETodoHandler {
-        DELETETodoHandler {
-            repository: repository,
-        }
+        DELETETodoHandler { repository: repository }
     }
 }
 
@@ -202,4 +190,3 @@ impl Handler for DELETETodoHandler {
         Ok(Response::with(status::Ok))
     }
 }
-
