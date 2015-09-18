@@ -1,7 +1,7 @@
 use std::thread;
 use std::sync::Arc;
 
-use ::todo::Todo;
+use todo::Todo;
 
 #[test]
 fn should_add_many_values_with_threds_with_an_id() {
@@ -70,7 +70,7 @@ fn should_delete_one() {
     repo.delete(String::from("0"));
 
     let all: Vec<u32> = repo.all();
-    
+
     assert_eq!(all.len(), 0);
 }
 
@@ -79,14 +79,12 @@ use std::collections::HashMap;
 use std::sync::Mutex;
 
 pub struct Repository<T> where T: Clone {
-   entities: Mutex<HashMap<String, T>>
+   entities: Mutex<HashMap<String, T>>,
 }
 
 impl<T> Repository<T> where T: Clone {
     pub fn new() -> Repository<T> {
-        Repository {
-            entities: Mutex::new(HashMap::new()),
-        }
+        Repository { entities: Mutex::new(HashMap::new()) }
     }
 
     pub fn add(&self, key: String, value: T) -> T where T: Clone {
@@ -114,7 +112,7 @@ impl<T> Repository<T> where T: Clone {
         let mut m_entities = self.entities.lock().unwrap();
         m_entities.clear();
     }
-    
+
     pub fn delete(&self, id: String) {
         let mut m_entities = self.entities.lock().unwrap();
         m_entities.remove(&id);

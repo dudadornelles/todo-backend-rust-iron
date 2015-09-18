@@ -1,4 +1,5 @@
-#[macro_use] extern crate rustc_serialize;
+#[macro_use]
+extern crate rustc_serialize;
 extern crate unicase;
 extern crate mount;
 extern crate bodyparser;
@@ -17,15 +18,15 @@ use std::str::FromStr;
 use iron::{status, headers};
 use iron::method::Method::*;
 use iron::prelude::*;
-use iron::{AfterMiddleware};
+use iron::AfterMiddleware;
 use mount::Mount;
 use router::Router;
 use iron::modifiers::Header;
 use unicase::UniCase;
 
 use ::handlers::*;
-use ::repository::Repository;
-use ::todo::Todo;
+use repository::Repository;
+use todo::Todo;
 
 struct CORS;
 
