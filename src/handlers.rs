@@ -137,7 +137,7 @@ impl Handler for PATCHTodoHandler {
 
                 let new_completed: bool = {
                     if json_object.get("completed").is_some() {
-                        String::from(json_object.get("completed").unwrap().as_string().unwrap()).parse().unwrap()
+                        json_object.get("completed").unwrap().as_boolean().unwrap()
                     } else { 
                         old_todo.completed.clone()
                     }
