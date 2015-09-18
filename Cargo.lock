@@ -4,6 +4,7 @@ version = "0.1.0"
 dependencies = [
  "bodyparser 0.0.5 (git+https://github.com/iron/body-parser.git)",
  "iron 0.2.2 (registry+https://github.com/rust-lang/crates.io-index)",
+ "mount 0.0.9 (registry+https://github.com/rust-lang/crates.io-index)",
  "router 0.0.15 (registry+https://github.com/rust-lang/crates.io-index)",
  "rustc-serialize 0.3.16 (registry+https://github.com/rust-lang/crates.io-index)",
  "uuid 0.1.17 (registry+https://github.com/rust-lang/crates.io-index)",
@@ -181,6 +182,16 @@ version = "0.1.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 
 [[package]]
+name = "mount"
+version = "0.0.9"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+dependencies = [
+ "iron 0.2.2 (registry+https://github.com/rust-lang/crates.io-index)",
+ "sequence_trie 0.0.13 (registry+https://github.com/rust-lang/crates.io-index)",
+ "url 0.2.37 (registry+https://github.com/rust-lang/crates.io-index)",
+]
+
+[[package]]
 name = "num_cpus"
 version = "0.2.6"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -267,6 +278,11 @@ dependencies = [
 [[package]]
 name = "rustc-serialize"
 version = "0.3.16"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+
+[[package]]
+name = "sequence_trie"
+version = "0.0.13"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 
 [[package]]

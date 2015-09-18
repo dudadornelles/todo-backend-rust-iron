@@ -7,11 +7,14 @@ use rustc_serialize::json;
 use iron::prelude::*;
 use iron::status;
 use iron::middleware::Handler;
+use iron::modifiers::Header;
+use iron::headers::AccessControlAllowOrigin;
 use router::Router;
 use uuid::Uuid;
 
 use ::repository::Repository;
 use ::todo::Todo;
+
 
 // == GET /todos
 pub struct GETTodosHandler {
