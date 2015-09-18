@@ -15,13 +15,12 @@ use std::sync::Arc;
 use std::env;
 use std::str::FromStr;
 
-use iron::{status, headers};
+use iron::headers;
 use iron::method::Method::*;
 use iron::prelude::*;
 use iron::AfterMiddleware;
 use mount::Mount;
 use router::Router;
-use iron::modifiers::Header;
 use unicase::UniCase;
 
 use ::handlers::*;
@@ -31,7 +30,7 @@ use todo::Todo;
 struct CORS;
 
 impl AfterMiddleware for CORS {
-    fn after(&self, req: &mut Request, mut res: Response) -> IronResult<Response> {
+    fn after(&self, _: &mut Request, mut res: Response) -> IronResult<Response> {
         res.headers.set(headers::AccessControlAllowOrigin::Any);
         res.headers.set(headers::AccessControlAllowHeaders(
                 vec![UniCase("accept".to_string()),

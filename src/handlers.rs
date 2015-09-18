@@ -1,14 +1,11 @@
 extern crate bodyparser;
 
 use std::sync::Arc;
-use std::collections::HashMap;
 
 use rustc_serialize::json;
 use iron::prelude::*;
 use iron::status;
 use iron::middleware::Handler;
-use iron::modifiers::Header;
-use iron::headers::AccessControlAllowOrigin;
 use router::Router;
 use uuid::Uuid;
 
