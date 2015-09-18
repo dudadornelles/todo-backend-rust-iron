@@ -1,1 +1,1 @@
-web: ./target/todo_backend
+web: ./target/release/todo_backend
