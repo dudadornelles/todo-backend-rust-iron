@@ -154,4 +154,26 @@ impl Handler for PATCHTodoHandler {
     }
 }
 
+// == DELETE /todos/:id
+pub struct DELETETodoHandler {
+    repository: Arc<Repository<Todo>>
+}
+
+impl DELETETodoHandler {
+    pub fn new(repository: Arc<Repository<Todo>>) -> DELETETodoHandler {
+        DELETETodoHandler {
+            repository: repository,
+        }
+    }
+}
+
+impl Handler for DELETETodoHandler {
+    fn handle(&self, req: &mut Request) -> IronResult<Response> {
+        let id = String::from(req.extensions.get::<Router>().unwrap().find("id").unwrap());
+        self.repository.delete(id);
+        Ok(Response::with(status::Ok))
+    }
+}
+
+
 

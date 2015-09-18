@@ -27,6 +27,7 @@ fn main() {
 
     router.get("/todos/:id", GETTodoHandler::new(repository.clone()));
     router.patch("/todos/:id", PATCHTodoHandler::new(repository.clone()));
+    router.delete("/todos/:id", DELETETodoHandler::new(repository.clone()));
 
     Iron::new(router).http("localhost:3000").unwrap();
 }
