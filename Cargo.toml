@@ -9,6 +9,7 @@ router = "*"
 uuid = "*"
 rustc-serialize = "*"
 mount = "*"
+unicase = "*"
 
 [dependencies.bodyparser]
 git = "https://github.com/iron/body-parser.git"

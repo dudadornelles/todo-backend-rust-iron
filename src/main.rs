@@ -1,4 +1,5 @@
 #[macro_use] extern crate rustc_serialize;
+extern crate unicase;
 extern crate mount;
 extern crate bodyparser;
 extern crate uuid;
@@ -13,12 +14,14 @@ use std::sync::Arc;
 use std::env;
 use std::str::FromStr;
 
+use iron::{status, headers};
+use iron::method::Method::*;
 use iron::prelude::*;
 use iron::{AfterMiddleware};
 use mount::Mount;
 use router::Router;
 use iron::modifiers::Header;
-use iron::headers::AccessControlAllowOrigin;
+use unicase::UniCase;
 
 use ::handlers::*;
 use ::repository::Repository;
@@ -27,12 +30,14 @@ use ::todo::Todo;
 struct CORS;
 
 impl AfterMiddleware for CORS {
-    fn after(&self, req: &mut Request, res: Response) -> IronResult<Response> {
-        if res.body.is_some() {
-            Ok(Response::with((res.status.unwrap(), res.body.unwrap(), Header(AccessControlAllowOrigin::Any))))
-        } else {
-            Ok(Response::with((res.status.unwrap(), Header(AccessControlAllowOrigin::Any))))
-        }
+    fn after(&self, req: &mut Request, mut res: Response) -> IronResult<Response> {
+        res.headers.set(headers::AccessControlAllowOrigin::Any);
+        res.headers.set(headers::AccessControlAllowHeaders(
+                vec![UniCase("accept".to_string()),
+                UniCase("content-type".to_string())]));
+        res.headers.set(headers::AccessControlAllowMethods(
+                vec![Get,Head,Post,Delete,Options,Put,Patch]));
+        Ok(res)
     }
 }
 
