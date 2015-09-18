@@ -10,7 +10,7 @@ pub struct Todo {
 
 impl Todo {
     pub fn new(id: String, title: String, completed: bool, order: u64) -> Todo {
-        let url = String::from("http://localhost:3000/todos/") + &id;
+        let url = String::from("https://floating-hamlet-5988.herokuapp.com/todos/") + &id;
         Todo {
             id: id,
             title: title,

@@ -1,1 +1,1 @@
-web: ./target/debug/todo_backend
+web: ./target/todo_backend
