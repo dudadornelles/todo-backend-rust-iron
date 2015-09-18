@@ -24,7 +24,7 @@ fn should_work_with_a_complex_struct() {
 
     let handles: Vec<_> = vec![0,1,2].into_iter().map(|i| {
         let repo = repo.clone();
-        let t = Todo::new(i.to_string(), String::from("O gosh..."), false);
+        let t = Todo::new(i.to_string(), String::from("O gosh..."), false, 0);
         return thread::spawn(move|| repo.add(i.to_string(), t));
     }).collect();
 

@@ -53,8 +53,25 @@ impl Handler for POSTTodosHandler {
         return match json_body {
             Ok(Some(json_body)) => {
                 let id = Uuid::new_v4().to_hyphenated_string();
-                let obj = json_body.as_object().unwrap();
-                let todo = Todo::new(id.clone(), String::from(obj.get("title").unwrap().as_string().unwrap()), false);
+                let json_object = json_body.as_object().unwrap();
+                
+                let new_title: String = { 
+                    if json_object.get("title").is_some() {
+                        String::from(json_object.get("title").unwrap().as_string().unwrap())
+                    } else { 
+                        String::from("") 
+                    }
+                };
+
+                let new_order: u64 = {
+                    if json_object.get("order").is_some() {
+                        json_object.get("order").unwrap().as_u64().unwrap()
+                    } else { 
+                        0
+                    }
+                };
+
+                let todo = Todo::new(id.clone(), new_title, false, new_order);
                 let todo = self.repository.add(id, todo);
                 Ok(Response::with((status::Created, json::encode(&todo).unwrap())))
             }
@@ -143,7 +160,15 @@ impl Handler for PATCHTodoHandler {
                     }
                 };
 
-                let todo = Todo::new(id.clone(), new_title, new_completed);
+                let new_order: u64 = {
+                    if json_object.get("order").is_some() {
+                        json_object.get("order").unwrap().as_u64().unwrap()
+                    } else { 
+                        old_todo.order.clone()
+                    }
+                };
+
+                let todo = Todo::new(id.clone(), new_title, new_completed, new_order);
                 let todo = self.repository.update(id, todo);
 
                 Ok(Response::with((status::Ok, json::encode(&todo).unwrap())))
@@ -174,6 +199,4 @@ impl Handler for DELETETodoHandler {
         Ok(Response::with(status::Ok))
     }
 }
-
-
 
