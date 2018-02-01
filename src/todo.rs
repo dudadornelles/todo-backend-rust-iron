@@ -11,7 +11,7 @@ pub struct Todo {
 impl Todo {
     pub fn new(id: String, title: String, completed: bool, order: u64) -> Todo {
         let url = String::from("https://floating-hamlet-5988.herokuapp.com/todos/") + &id;
-    //    let url = String::from("http://0.0.0.0:8080/todos/") + &id;
+  //      let url = String::from("http://0.0.0.0:8080/todos/") + &id;
         Todo { id: id, title: title, order: order, completed: completed, url: url }
     }
 }

@@ -43,12 +43,12 @@ impl Handler for POSTTodosHandler {
         let json_body = req.get::<bodyparser::Json>();
         return match json_body {
             Ok(Some(json_body)) => {
-                let id = Uuid::new_v4().to_hyphenated_string();
+                let id = Uuid::new_v4().hyphenated().to_string();
                 let json_object = json_body.as_object().unwrap();
                 
                 let new_title: String = { 
                     if json_object.get("title").is_some() {
-                        String::from(json_object.get("title").unwrap().as_string().unwrap())
+                        String::from(json_object.get("title").unwrap().as_str().unwrap())
                     } else { 
                         String::from("") 
                     }
@@ -104,7 +104,7 @@ impl Handler for PATCHTodoHandler {
 
                 let new_title: String = { 
                     if json_object.get("title").is_some() {
-                        String::from(json_object.get("title").unwrap().as_string().unwrap())
+                        String::from(json_object.get("title").unwrap().as_str().unwrap())
                     } else { 
                         old_todo.title.clone() 
                     }
@@ -112,7 +112,7 @@ impl Handler for PATCHTodoHandler {
 
                 let new_completed: bool = {
                     if json_object.get("completed").is_some() {
-                        json_object.get("completed").unwrap().as_boolean().unwrap()
+                        json_object.get("completed").unwrap().as_bool().unwrap()
                     } else { 
                         old_todo.completed.clone()
                     }

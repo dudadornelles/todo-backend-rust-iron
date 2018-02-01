@@ -6,10 +6,10 @@ authors = ["Duda Dornelles <dudassdornelles@gmail.com>"]
 [dependencies]
 iron = "*"
 router = "*"
-uuid = "*"
+uuid = { version = "0.4", features = ["serde", "v4"] }
 rustc-serialize = "*"
 mount = "*"
-unicase = "*"
+unicase = "1.4.2"
 
 [dependencies.bodyparser]
 git = "https://github.com/iron/body-parser.git"

@@ -33,8 +33,10 @@ impl AfterMiddleware for CORS {
     fn after(&self, _: &mut Request, mut res: Response) -> IronResult<Response> {
         res.headers.set(headers::AccessControlAllowOrigin::Any);
         res.headers.set(headers::AccessControlAllowHeaders(
-                vec![UniCase("accept".to_string()),
-                UniCase("content-type".to_string())]));
+                vec![
+                    UniCase("accept".to_string()),
+                    UniCase("content-type".to_string())
+                ]));
         res.headers.set(headers::AccessControlAllowMethods(
                 vec![Get,Head,Post,Delete,Options,Put,Patch]));
         Ok(res)
@@ -45,13 +47,13 @@ fn main() {
     let mut router = Router::new();
     let repository: Arc<Repository<Todo>> = Arc::new(Repository::new());
 
-    router.get("/todos", GETTodosHandler::new(repository.clone()));
-    router.post("/todos", POSTTodosHandler::new(repository.clone()));
-    router.delete("/todos", DELETETodosHandler::new(repository.clone()));
+    router.get("/todos", GETTodosHandler::new(repository.clone()), "get_todos");
+    router.post("/todos", POSTTodosHandler::new(repository.clone()), "create_todos");
+    router.delete("/todos", DELETETodosHandler::new(repository.clone()), "delete_todos");
 
-    router.get("/todos/:id", GETTodoHandler::new(repository.clone()));
-    router.patch("/todos/:id", PATCHTodoHandler::new(repository.clone()));
-    router.delete("/todos/:id", DELETETodoHandler::new(repository.clone()));
+    router.get("/todos/:id", GETTodoHandler::new(repository.clone()), "get_todo");
+    router.patch("/todos/:id", PATCHTodoHandler::new(repository.clone()), "update_todo");
+    router.delete("/todos/:id", DELETETodoHandler::new(repository.clone()), "delete_todo");
 
     let mut mount = Mount::new();
     mount.mount("/", router);
